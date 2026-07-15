@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOOD TRUCK | HPC International School</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.34/dist/lenis.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#262822',
+                        light: '#E6E8E1',
+                        cardBg: '#32352E',
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #E6E8E1;
+            color: #262822;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Lenis Smooth Scroll Core */
+        html.lenis { height: auto; }
+        .lenis-smooth { scroll-behavior: auto !important; }
+        .lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #262822; border-radius: 10px; }
+
+        /* Custom UI Elements */
+        details > summary { list-style: none; outline: none; }
+        details > summary::-webkit-details-marker { display: none; }
+
+        /* Timeline drawing line - Dark Olive Green Accent (#32352E) */
+        .timeline-line-container {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: rgba(50, 53, 46, 0.15);
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        .timeline-line-progress {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: #32352E;
+        }
+
+        /* Package Section Pinning Styles */
+        .package-wrapper {
+            height: 100vh;
+            width: 100vw;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a1a18;
+        }
+        
+        .huge-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 13vw;
+            color: rgba(230, 232, 225, 0.05);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1;
+            font-family: "Playfair Display", serif;
+            font-style: italic;
+        }
+
+        .cards-stack-container {
+            position: relative;
+            width: 340px;
+            height: 440px;
+            z-index: 10;
+            perspective: 1000px;
+        }
+
+        .stack-card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #32352E;
+            border-radius: 24px;
+            padding: 28px;
+            color: #E6E8E1;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            will-change: transform;
+            transform-origin: bottom center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Horizontal Scroll Gallery */
+        .horizontal-scroll-container {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .horizontal-track {
+            display: flex;
+            gap: 2.5rem;
+            padding: 0 50vw;
+            width: max-content;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-line-container { left: 24px; transform: none; }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+
+    <nav id="navbar" class="fixed w-full top-0 z-50 px-8 py-6 flex justify-between items-center transition-all duration-300" style="background-color: rgba(230, 232, 225, 0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(50, 53, 46, 0.15);">
+        <a href="#hero" class="font-serif italic font-bold text-lg tracking-tight text-dark hover:text-cardBg transition-colors">HPC Food Truck</a>
+        <div class="flex space-x-8 text-xs font-bold tracking-[0.15em] uppercase text-dark">
+            <a href="#intro" class="hover:text-cardBg transition-colors">Our Idea</a>
+            <a href="#experiences" class="hover:text-cardBg transition-colors">What's New</a>
+            <a href="#package-section" class="hover:text-cardBg transition-colors">When & Where</a>
+            <a href="#testimonials-section" class="hover:text-cardBg transition-colors">Our Goals</a>
+            <a href="#contact" class="hover:text-cardBg transition-colors">Get In Touch</a>
+        </div>
+    </nav>
+
+    <header id="hero" class="relative h-screen w-full flex items-center justify-center text-center px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0 scale-110" id="hero-bg">
+            <img src="https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?auto=format&fit=crop&w=1800&q=80" 
+                 class="w-full h-full object-cover brightness-[0.75]" alt="HPC Food Truck" />
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-0"></div>
+        
+        <div class="relative z-10 max-w-4xl px-4 mt-8" id="hero-content">
+            <p class="text-xs md:text-sm text-white/80 mb-6 tracking-[0.3em] uppercase font-bold">HPC International School presents</p>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-0 md:gap-6">
+                <span class="text-white font-black text-[clamp(4.5rem,13vw,9rem)] leading-none tracking-tighter uppercase" id="food-text">THE FOOD</span>
+                <span class="text-gray-300 font-black text-[clamp(4.5rem,13vw,9rem)] leading-none tracking-tighter uppercase font-serif italic" id="truck-text">TRUCK</span>
+            </div>
+            <p class="text-md md:text-lg text-white/95 mb-10 max-w-2xl mx-auto font-light tracking-wide leading-relaxed mt-8">
+                Welcome to our new and improved food truck! We listened to what students wanted, made prices cheaper, and simplified everything.
+            </p>
+            <a href="#intro" class="inline-block bg-white text-dark px-12 py-4 rounded-full font-bold text-xs tracking-[0.2em] uppercase transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl shadow-lg hover:bg-light">
+                See how it works
+            </a>
+        </div>
+
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+            <svg class="w-6 h-6 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+    </header>
+
+    <section class="bg-light relative pt-24 pb-40 z-20" id="intro">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-28" id="intro-gallery">
+                <div class="overflow-hidden rounded-2xl h-80 translate-y-12 shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1622467827417-bbe2237067a9?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover g-img" alt="Protein Bar" />
+                </div>
+                <div class="overflow-hidden rounded-2xl h-96 shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1566478989037-eec170784d0b?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover g-img scale-110" alt="Pringles" />
+                </div>
+                <div class="overflow-hidden rounded-2xl h-96 translate-y-8 shadow-2xl">
+                    <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover g-img scale-110" alt="Coca Cola" />
+                </div>
+                <div class="overflow-hidden rounded-2xl h-80 translate-y-20 shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1581798459219-318e76aecc7b?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover g-img" alt="Haribo Gummies" />
+                </div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto text-center reveal-text pt-8">
+                <p class="text-2xl md:text-3xl leading-relaxed text-dark font-serif italic mb-6">
+                    "Instead of selling things nobody wants, we're focusing on exactly what you actually feel like buying."
+                </p>
+                <p class="text-base md:text-lg leading-relaxed text-dark opacity-75 max-w-2xl mx-auto font-light">
+                    We keep our menu simple with essentials like fresh snacks, chips, and cold drinks—all at prices cheaper than any shop nearby.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-light py-32 relative" id="experiences">
+        <div class="text-center mb-32 reveal-header">
+            <h2 class="font-serif text-5xl md:text-7xl mb-4 text-dark">The Three Big Changes</h2>
+            <p class="text-sm uppercase tracking-[0.2em] opacity-60">Simple, easy, and made for you</p>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 relative" id="timeline-container">
+            <div class="timeline-line-container">
+                <div class="timeline-line-progress" id="t-progress"></div>
+            </div>
+
+            <div class="t-row flex flex-col md:flex-row items-center justify-between mb-48 relative z-10">
+                <div class="w-full md:w-[45%] flex justify-end pr-0 md:pr-16 mb-8 md:mb-0 t-img-wrap">
+                    <div class="overflow-hidden rounded-3xl shadow-2xl h-[300px] w-full max-w-md">
+                        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover t-img scale-110" alt="Customer Driven" />
+                    </div>
+                </div>
+                <div class="t-badge absolute left-[24px] md:left-1/2 transform -translate-x-1/2 w-12 h-12 bg-[#32352E] text-white rounded-full flex items-center justify-center text-xs font-bold z-20 scale-0">01</div>
+                <div class="w-full md:w-[45%] pl-16 md:pl-16 t-text opacity-0 translate-y-10">
+                    <h3 class="font-serif text-3xl md:text-4xl mb-4 text-dark">Focusing on What You Actually Want</h3>
+                    <p class="opacity-80 leading-relaxed text-md font-light text-dark">We ask you what snacks you want on the menu every single week. Instead of a fixed menu that never changes, we adapt to what you feel like having.</p>
+                </div>
+            </div>
+
+            <div class="t-row flex flex-col md:flex-row-reverse items-center justify-between mb-48 relative z-10">
+                <div class="w-full md:w-[45%] flex justify-start pl-0 md:pl-16 mb-8 md:mb-0 t-img-wrap">
+                    <div class="overflow-hidden rounded-3xl shadow-2xl h-[300px] w-full max-w-md">
+                        <img src="https://images.unsplash.com/photo-1563013544-824ae1d704d3?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover t-img scale-110" alt="Online Payment" />
+                    </div>
+                </div>
+                <div class="t-badge absolute left-[24px] md:left-1/2 transform -translate-x-1/2 w-12 h-12 bg-[#32352E] text-white rounded-full flex items-center justify-center text-xs font-bold z-20 scale-0">02</div>
+                <div class="w-full md:w-[45%] pr-0 md:pr-16 md:text-right pl-16 md:pl-0 t-text opacity-0 translate-y-10">
+                    <h3 class="font-serif text-3xl md:text-4xl mb-4 text-dark">Easier Ways to Pay</h3>
+                    <p class="opacity-80 leading-relaxed text-md font-light text-dark">Right now, we accept Apple Pay. Very soon, we'll also have card readers to accept Revolut, Visa, and Mastercard so you don't always need to carry cash.</p>
+                </div>
+            </div>
+
+            <div class="t-row flex flex-col md:flex-row items-center justify-between relative z-10">
+                <div class="w-full md:w-[45%] flex justify-end pr-0 md:pr-16 mb-8 md:mb-0 t-img-wrap">
+                    <div class="overflow-hidden rounded-3xl shadow-2xl h-[300px] w-full max-w-md">
+                        <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover t-img scale-110" alt="Menu System" />
+                    </div>
+                </div>
+                <div class="t-badge absolute left-[24px] md:left-1/2 transform -translate-x-1/2 w-12 h-12 bg-[#32352E] text-white rounded-full flex items-center justify-center text-xs font-bold z-20 scale-0">03</div>
+                <div class="w-full md:w-[45%] pl-16 md:pl-16 t-text opacity-0 translate-y-10">
+                    <h3 class="font-serif text-3xl md:text-4xl mb-4 text-dark">A Simpler Menu</h3>
+                    <p class="opacity-80 leading-relaxed text-md font-light text-dark">Our menu is now split in two: basic favorites (like chips, cold drinks, and standard snacks) that are always available, plus one special treat (like fresh cookies) that changes every single week based on what you love.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="package-trigger"></div>
+    <section class="bg-[#1a1a18] text-light" id="package-section">
+        <div class="package-wrapper">
+            <div class="huge-text" id="huge-title">When & Where</div>
+            
+            <div class="cards-stack-container" id="cards-stack">
+                
+                <div class="stack-card card-3">
+                    <div class="overflow-hidden rounded-xl h-44 mb-4">
+                        <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Feedback Station" />
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-white/50 block mb-1">Your Ideas</span>
+                        <h3 class="font-serif text-2xl mb-2 text-white">Tell us what to stock</h3>
+                    </div>
+                    <p class="opacity-75 text-xs leading-relaxed">We'll keep a feedback notebook at the truck. Just write down any snacks or drinks you want us to stock, and we'll do our best to get them!</p>
+                </div>
+
+                <div class="stack-card card-2">
+                    <div class="overflow-hidden rounded-xl h-44 mb-4">
+                        <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Parking Spaces" />
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-white/50 block mb-1">Location</span>
+                        <h3 class="font-serif text-2xl mb-2 text-white">Where we park</h3>
+                    </div>
+                    <p class="opacity-75 text-xs leading-relaxed">You can find us right by the school bike racks, under the shade of the trees next to the benches.</p>
+                </div>
+
+                <div class="stack-card card-1">
+                    <div class="overflow-hidden rounded-xl h-44 mb-4">
+                        <img src="https://images.unsplash.com/photo-1508962914676-134849a727f0?auto=format&fit=crop&w=500&q=80" class="w-full h-full object-cover" alt="Time Allocation" />
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-white/50 block mb-1">When we are open</span>
+                        <h3 class="font-serif text-2xl mb-2 text-white">Opening Hours</h3>
+                    </div>
+                    <p class="opacity-75 text-xs leading-relaxed">We are open during lunch break, from 1:00 PM to 1:40 PM every day.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-dark text-light overflow-hidden" id="testimonials-section">
+        <div class="horizontal-scroll-container">
+            <div class="absolute top-20 left-1/2 transform -translate-x-1/2 text-center w-full z-10 pointer-events-none">
+                <h2 class="font-serif text-5xl text-light">What we want to achieve</h2>
+                <p class="text-xs uppercase tracking-[0.2em] text-white/40 mt-2">Our simple goals for the school community</p>
+            </div>
+            
+            <div class="horizontal-track" id="h-track">
+                <div class="w-[420px] h-[320px] bg-[#32352E] p-10 rounded-[2rem] flex flex-col justify-between flex-shrink-0 border border-white/5 shadow-xl">
+                    <span class="font-serif text-4xl text-light/20 italic font-bold">01</span>
+                    <div>
+                        <h4 class="font-serif text-2xl text-white mb-2">Cheap Prices</h4>
+                        <p class="opacity-80 text-sm leading-relaxed">We want to provide affordable snacks, treats, and cold drinks directly to everyone in school.</p>
+                    </div>
+                </div>
+                <div class="w-[420px] h-[320px] bg-[#32352E] p-10 rounded-[2rem] flex flex-col justify-between flex-shrink-0 border border-white/5 shadow-xl">
+                    <span class="font-serif text-4xl text-light/20 italic font-bold">02</span>
+                    <div>
+                        <h4 class="font-serif text-2xl text-white mb-2">Easy Payments</h4>
+                        <p class="opacity-80 text-sm leading-relaxed">We want to make buying things simple and quick with modern mobile and card payment options.</p>
+                    </div>
+                </div>
+                <div class="w-[420px] h-[320px] bg-[#32352E] p-10 rounded-[2rem] flex flex-col justify-between flex-shrink-0 border border-white/5 shadow-xl">
+                    <span class="font-serif text-4xl text-light/20 italic font-bold">03</span>
+                    <div>
+                        <h4 class="font-serif text-2xl text-white mb-2">No Fancy Nonsense</h4>
+                        <p class="opacity-80 text-sm leading-relaxed">No weird or overcomplicated items. Just good, simple snacks that students actually enjoy eating.</p>
+                    </div>
+                </div>
+                <div class="w-[420px] h-[320px] bg-[#32352E] p-10 rounded-[2rem] flex flex-col justify-between flex-shrink-0 border border-white/5 shadow-xl">
+                    <span class="font-serif text-4xl text-light/20 italic font-bold">04</span>
+                    <div>
+                        <h4 class="font-serif text-2xl text-white mb-2">Save Time and Money</h4>
+                        <p class="opacity-80 text-sm leading-relaxed">A much cheaper and faster choice than walking all the way to the expensive supermarkets outside.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Balanced Contact Section (No huge side gaps + Premium Asymmetric Grid Layout) -->
+    <section id="contact" class="bg-[#1c1d1a] text-light py-32 border-t border-white/5 relative z-30">
+        <div class="max-w-6xl mx-auto px-8 md:px-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-center">
+                
+                <!-- Left Column: Elegant contextual header -->
+                <div class="space-y-6">
+                    <p class="text-xs uppercase tracking-[0.2em] text-white/60 font-semibold">Who's running this?</p>
+                    <h2 class="font-serif text-5xl md:text-6xl text-white leading-tight">Get in touch <br><span class="italic font-normal">with us.</span></h2>
+                    <p class="text-white/60 font-light leading-relaxed text-base max-w-md">
+                        Have a question, an idea, or want to help out with the club? Just come chat with us near the bike racks during lunch break, or reach out to our supervising faculty coordinator.
+                    </p>
+                    <div class="pt-8 border-t border-white/10 w-40">
+                        <p class="text-xs uppercase tracking-[0.2em] text-white/40">Made by MYP4</p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive clean directory card info -->
+                <div class="bg-[#262822] p-8 md:p-12 rounded-[2rem] border border-white/5 space-y-8 shadow-2xl">
+                    <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                        <span class="text-xs uppercase tracking-wider text-white/40">Teacher in Charge</span>
+                        <span class="text-sm font-semibold text-white">Mr. Traynor</span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                        <span class="text-xs uppercase tracking-wider text-white/40">Email Address</span>
+                        <span class="text-sm font-semibold">
+                            <a href="mailto:eamonn.traynor@fuu.de" class="text-[#a1b59a] underline hover:text-white transition-colors">eamonn.traynor@fuu.de</a>
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-center border-b border-white/10 pb-4">
+                        <span class="text-xs uppercase tracking-wider text-white/40">Our School</span>
+                        <span class="text-sm font-semibold text-white">HPC International School</span>
+                    </div>
+                    <div class="flex justify-between items-center pb-2">
+                        <span class="text-xs uppercase tracking-wider text-white/40">Our Club</span>
+                        <span class="text-sm font-semibold text-white">Food Truck Club</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-light py-12 text-center text-xs opacity-50 border-t border-white/5">
+        <p>Food Truck Club &copy; 2026. HPC International School. All community rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Lenis Smooth Scroll Setup
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smoothWheel: true
+            });
+
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => { lenis.raf(time * 1000) });
+            gsap.ticker.lagSmoothing(0);
+            
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Handle smooth scrolling natively on quick navigation link clicks using Lenis
+            document.querySelectorAll('#navbar a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const targetId = link.getAttribute('href');
+                    if (targetId && targetId.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            lenis.scrollTo(targetElement, {
+                                offset: -75, // Adjust scroll offset to account for navbar height
+                                duration: 1.2
+                            });
+                        }
+                    }
+                });
+            });
+
+            // Hero heading entrance animation
+            gsap.from("#food-text", { opacity: 0, y: 80, duration: 1.2, delay: 0.3, ease: "power4.out" });
+            gsap.from("#truck-text", { opacity: 0, y: 80, duration: 1.2, delay: 0.6, ease: "power4.out" });
+            gsap.from("#hero-content p:first-child", { opacity: 0, y: 30, duration: 0.8, delay: 0.1, ease: "power3.out" });
+            gsap.from("#hero-content p:last-child", { opacity: 0, y: 30, duration: 0.8, delay: 0.9, ease: "power3.out" });
+
+            // Make navbar look compact on scroll instead of completely hiding it
+            gsap.to("#navbar", {
+                paddingTop: "14px",
+                paddingBottom: "14px",
+                backgroundColor: "rgba(230, 232, 225, 0.98)",
+                borderBottomColor: "rgba(50, 53, 46, 0.15)",
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: "#hero",
+                    start: "bottom top",
+                    toggleActions: "play none none reverse"
+                }
+            });
+
+            // 2. Hero Parallax
+            gsap.fromTo("#hero-bg", { scale: 1.15 }, {
+                yPercent: 30,
+                scale: 1,
+                ease: "none",
+                scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true }
+            });
+            gsap.to("#hero-content", {
+                yPercent: 20, opacity: 0,
+                ease: "none",
+                scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true }
+            });
+
+            // 3. Image Reveal Parallax (Intro Gallery)
+            const galleryImages = document.querySelectorAll('.g-img');
+            galleryImages.forEach(img => {
+                gsap.to(img, {
+                    scale: 1,
+                    yPercent: 10,
+                    ease: "none",
+                    scrollTrigger: { trigger: img.parentElement, start: "top bottom", end: "bottom top", scrub: true }
+                });
+            });
+
+            // 4. Timeline Drawing & Revealing
+            const tContainer = document.querySelector('#timeline-container');
+            const progressLine = document.querySelector('#t-progress');
+            
+            // Draw line
+            gsap.to(progressLine, {
+                height: "100%",
+                ease: "none",
+                scrollTrigger: {
+                    trigger: tContainer,
+                    start: "top center",
+                    end: "bottom center",
+                    scrub: 0.5
+                }
+            });
+
+            // Reveal rows
+            const rows = document.querySelectorAll('.t-row');
+            rows.forEach((row, i) => {
+                const tl = gsap.timeline({
+                    scrollTrigger: {
+                        trigger: row,
+                        start: "top 60%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+
+                tl.to(row.querySelector('.t-badge'), { scale: 1, duration: 0.5, ease: "back.out(1.5)" })
+                  .to(row.querySelector('.t-text'), { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.2")
+                  .fromTo(row.querySelector('.t-img'), { scale: 1.2 }, { scale: 1, duration: 1.5, ease: "power2.out" }, "-=0.8");
+            });
+
+            // 5. THE COMPLEX PINNED STACK ANIMATION (When & Where)
+            const packageSection = document.querySelector('#package-section');
+            const hugeTitle = document.querySelector('#huge-title');
+            
+            // Initial states for stack
+            gsap.set('.card-1', { rotation: 0, zIndex: 3 });
+            gsap.set('.card-2', { rotation: 0, zIndex: 2 });
+            gsap.set('.card-3', { rotation: 0, zIndex: 1 });
+
+            const packageTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: packageSection,
+                    start: "top top",
+                    end: "+=250%", // Pin for 2.5x screen height to allow scrubbing
+                    pin: true,
+                    scrub: 1,
+                    anticipatePin: 1
+                }
+            });
+
+            // Animation sequence as user scrubs:
+            packageTl
+                // Fade and scale up background text
+                .to(hugeTitle, { scale: 1.3, opacity: 0.15, duration: 1 }, 0)
+                
+                // Fan out the cards like a deck
+                .to('.card-1', { xPercent: -105, yPercent: 8, rotation: -10, duration: 1, ease: "power2.inOut" }, 0.2)
+                .to('.card-3', { xPercent: 105, yPercent: 8, rotation: 10, duration: 1, ease: "power2.inOut" }, 0.2)
+                .to('.card-2', { yPercent: -5, duration: 1, ease: "power2.inOut" }, 0.2)
+                
+                // Hold the fanned state
+                .to({}, { duration: 0.5 }); 
+
+            // 6. Horizontal Scroll Testimonials
+            const hSection = document.querySelector('#testimonials-section');
+            const hTrack = document.querySelector('#h-track');
+
+            gsap.to(hTrack, {
+                x: () => -(hTrack.scrollWidth - window.innerWidth),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: hSection,
+                    start: "top top",
+                    end: () => "+=" + hTrack.scrollWidth,
+                    pin: true,
+                    scrub: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+        });
+    </script>
+</body>
+</html>
