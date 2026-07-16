@@ -7,7 +7,7 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght=0,400;0,500;0,600;1,400&family=Inter:wght=300;400;500;700;900&display=swap" rel="stylesheet">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -42,19 +42,16 @@
 
         /* Lenis Smooth Scroll Core */
         html.lenis { height: auto; }
-       .lenis-smooth { scroll-behavior: auto!important; }
-       .lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis-smooth { scroll-behavior: auto!important; }
+        .lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
 
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #262822; border-radius: 10px; }
 
-        /* Custom UI Elements */
         details > summary { list-style: none; outline: none; }
         details > summary::-webkit-details-marker { display: none; }
 
-        /* ==================================================== */
-        /* ==================================================== */
         #desktop-view { display: block; }
         #mobile-view { display: none; }
 
@@ -147,7 +144,7 @@
         /* --- MOBILE STYLES --- */
         #mobile-view .mobile-timeline-line-container {
             position: absolute;
-            left: 20px;
+            left: 24px; /* Matches container padding barrier */
             top: 0;
             bottom: 0;
             width: 3px;
@@ -213,6 +210,7 @@
 </head>
 <body class="font-sans antialiased">
 
+    <!-- DESKTOP VIEWPORT LAYOUT -->
     <div id="desktop-view">
         <nav id="navbar" class="fixed w-full top-0 z-50 px-8 py-6 flex justify-between items-center transition-all duration-300" style="background-color: rgba(230, 232, 225, 0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(50, 53, 46, 0.15);">
             <a href="#hero" class="font-serif italic font-bold text-lg tracking-tight text-dark hover:text-cardBg transition-colors">HPC Food Truck</a>
@@ -287,10 +285,11 @@
                 <div class="timeline-line-container">
                     <div class="timeline-line-progress" id="t-progress"></div>
                 </div>
+                <!-- Desktop Change 1 -->
                 <div class="t-row flex flex-col md:flex-row items-center justify-between mb-48 relative z-10">
                     <div class="w-full md:w-[45%] flex justify-end pr-0 md:pr-16 mb-8 md:mb-0 t-img-wrap">
                         <div class="overflow-hidden rounded-3xl shadow-2xl h-[300px] w-full max-w-md">
-                            <img src="timeline%20first%20image.png" class="w-full h-full object-cover t-img scale-110" alt="Customer Driven - Fresh Snacks" />
+                            <img src="snacks.png" class="w-full h-full object-cover t-img scale-110" alt="Customer Driven - Fresh Snacks" />
                         </div>
                     </div>
                     <div class="t-badge absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-[#32352E] text-white rounded-full flex items-center justify-center text-xs font-bold z-20 scale-0">01</div>
@@ -299,10 +298,11 @@
                         <p class="opacity-80 leading-relaxed text-md font-light text-dark">We ask you what snacks you want on the menu every single week. Instead of a fixed menu that never changes, we adapt to what you feel like having.</p>
                     </div>
                 </div>
+                <!-- Desktop Change 2 -->
                 <div class="t-row flex flex-col md:flex-row-reverse items-center justify-between mb-48 relative z-10">
                     <div class="w-full md:w-[45%] flex justify-start pl-0 md:pl-16 mb-8 md:mb-0 t-img-wrap">
                         <div class="overflow-hidden rounded-3xl shadow-2xl h-[300px] w-full max-w-md">
-                            <img src="timeline%20second%20image.png" class="w-full h-full object-cover t-img scale-110" alt="Online Payment - Credit Cards" />
+                            <img src="creedit car.png" class="w-full h-full object-cover t-img scale-110" alt="Online Payment - Credit Cards" />
                         </div>
                     </div>
                     <div class="t-badge absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-[#32352E] text-white rounded-full flex items-center justify-center text-xs font-bold z-20 scale-0">02</div>
@@ -311,10 +311,11 @@
                         <p class="opacity-80 leading-relaxed text-md font-light text-dark">Right now, we accept Apple Pay. Very soon, we'll also have card readers to accept Revolut, Visa, and Mastercard so you don't always need to carry cash.</p>
                     </div>
                 </div>
+                <!-- Desktop Change 3 -->
                 <div class="t-row flex flex-col md:flex-row items-center justify-between relative z-10">
                     <div class="w-full md:w-[45%] flex justify-end pr-0 md:pr-16 mb-8 md:mb-0 t-img-wrap">
                         <div class="overflow-hidden rounded-3xl shadow-2xl h-[300px] w-full max-w-md">
-                            <img src="timeline%20thrid%20image.jpg" class="w-full h-full object-cover t-img scale-110" alt="Menu System" />
+                            <img src="menu.png" class="w-full h-full object-cover t-img scale-110" alt="Menu System" />
                         </div>
                     </div>
                     <div class="t-badge absolute left-1/2 transform -translate-x-1/2 w-12 h-12 bg-[#32352E] text-white rounded-full flex items-center justify-center text-xs font-bold z-20 scale-0">03</div>
@@ -333,7 +334,7 @@
                 <div class="cards-stack-container" id="cards-stack">
                     <div class="stack-card card-3">
                         <div class="overflow-hidden rounded-xl h-44 mb-4">
-                            <img src="Tell%20us%20what%20to%20stock%20image.png" class="w-full h-full object-cover" alt="Feedback Notebook" />
+                            <img src="notpad.png" class="w-full h-full object-cover" alt="Feedback Notebook" />
                         </div>
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-white/50 block mb-1">Your Ideas</span>
@@ -343,7 +344,7 @@
                     </div>
                     <div class="stack-card card-2">
                         <div class="overflow-hidden rounded-xl h-44 mb-4">
-                            <img src="Where%20we%20park%20image.jpeg" class="w-full h-full object-cover" alt="Where we park" />
+                            <img src="where we park.png" class="w-full h-full object-cover" alt="Where we park" />
                         </div>
                         <div>
                             <span class="text-xs font-bold uppercase tracking-wider text-white/50 block mb-1">Location</span>
@@ -447,6 +448,7 @@
     </div>
 
 
+    <!-- MOBILE VIEWPORT LAYOUT -->
     <div id="mobile-view">
         <nav id="mobile-navbar" class="fixed w-full top-0 z-50 px-5 py-4 flex justify-between items-center bg-light/95 backdrop-blur-md border-b border-dark/10">
             <a href="#m-hero" class="font-serif italic font-bold text-md tracking-tight text-dark">HPC Food Truck</a>
@@ -511,33 +513,36 @@
                     <div class="mobile-timeline-line-progress" id="m-t-progress"></div>
                 </div>
 
-                <div class="m-t-row flex items-start mb-16 relative z-10 pl-10">
-                    <div class="absolute left-1.5 w-7 h-7 bg-[#32352E] text-white rounded-full flex items-center justify-center text-[10px] font-bold">01</div>
-                    <div class="space-y-3 w-full">
+                <!-- Mobile Change 1 -->
+                <div class="m-t-row flex items-start mb-16 relative z-10 pl-12">
+                    <div class="absolute left-0 top-1 w-6 h-6 bg-[#32352E] text-white rounded-full flex items-center justify-center text-[10px] font-bold transform -translate-x-1/2">01</div>
+                    <div class="space-y-3 w-full m-t-content opacity-0 translate-y-6">
                         <div class="overflow-hidden rounded-2xl shadow-lg h-44 w-full">
-                            <img src="timeline%20first%20image.png" class="w-full h-full object-cover" alt="Customer Driven - Fresh Snacks" />
+                            <img src="snacks.png" class="w-full h-full object-cover" alt="Customer Driven - Fresh Snacks" />
                         </div>
                         <h3 class="font-serif text-xl text-dark font-bold">Focusing on What You Actually Want</h3>
                         <p class="opacity-80 leading-relaxed text-xs font-light text-dark">We ask you what snacks you want on the menu every single week. Instead of a fixed menu that never changes, we adapt to what you feel like having.</p>
                     </div>
                 </div>
 
-                <div class="m-t-row flex items-start mb-16 relative z-10 pl-10">
-                    <div class="absolute left-1.5 w-7 h-7 bg-[#32352E] text-white rounded-full flex items-center justify-center text-[10px] font-bold">02</div>
-                    <div class="space-y-3 w-full">
+                <!-- Mobile Change 2 -->
+                <div class="m-t-row flex items-start mb-16 relative z-10 pl-12">
+                    <div class="absolute left-0 top-1 w-6 h-6 bg-[#32352E] text-white rounded-full flex items-center justify-center text-[10px] font-bold transform -translate-x-1/2">02</div>
+                    <div class="space-y-3 w-full m-t-content opacity-0 translate-y-6">
                         <div class="overflow-hidden rounded-2xl shadow-lg h-44 w-full">
-                            <img src="timeline%20second%20image.png" class="w-full h-full object-cover" alt="Online Payment - Credit Cards" />
+                            <img src="creedit car.png" class="w-full h-full object-cover" alt="Online Payment - Credit Cards" />
                         </div>
                         <h3 class="font-serif text-xl text-dark font-bold">Easier Ways to Pay</h3>
                         <p class="opacity-80 leading-relaxed text-xs font-light text-dark">Right now, we accept Apple Pay. Very soon, we'll also have card readers to accept Revolut, Visa, and Mastercard so you don't always need to carry cash.</p>
                     </div>
                 </div>
 
-                <div class="m-t-row flex items-start relative z-10 pl-10">
-                    <div class="absolute left-1.5 w-7 h-7 bg-[#32352E] text-white rounded-full flex items-center justify-center text-[10px] font-bold">03</div>
-                    <div class="space-y-3 w-full">
+                <!-- Mobile Change 3 -->
+                <div class="m-t-row flex items-start relative z-10 pl-12">
+                    <div class="absolute left-0 top-1 w-6 h-6 bg-[#32352E] text-white rounded-full flex items-center justify-center text-[10px] font-bold transform -translate-x-1/2">03</div>
+                    <div class="space-y-3 w-full m-t-content opacity-0 translate-y-6">
                         <div class="overflow-hidden rounded-2xl shadow-lg h-44 w-full">
-                            <img src="timeline%20thrid%20image.jpg" class="w-full h-full object-cover" alt="Menu System" />
+                            <img src="menu.png" class="w-full h-full object-cover" alt="Menu System" />
                         </div>
                         <h3 class="font-serif text-xl text-dark font-bold">A Simpler Menu</h3>
                         <p class="opacity-80 leading-relaxed text-xs font-light text-dark">Our menu is split in two: basic favorites always available, plus one special treat that changes weekly based on what you love.</p>
@@ -552,7 +557,7 @@
                 <div class="mobile-cards-stack-container" id="m-cards-stack">
                     <div class="mobile-stack-card m-card-3">
                         <div class="overflow-hidden rounded-xl h-36 mb-3">
-                            <img src="Tell%20us%20what%20to%20stock%20image.png" class="w-full h-full object-cover" alt="Feedback Notebook" />
+                            <img src="notpad.png" class="w-full h-full object-cover" alt="Feedback Notebook" />
                         </div>
                         <div>
                             <span class="text-[9px] font-bold uppercase tracking-wider text-white/50 block mb-0.5">Your Ideas</span>
@@ -562,7 +567,7 @@
                     </div>
                     <div class="mobile-stack-card m-card-2">
                         <div class="overflow-hidden rounded-xl h-36 mb-3">
-                            <img src="Where%20we%20park%20image.jpeg" class="w-full h-full object-cover" alt="Where we park" />
+                            <img src="where we park.png" class="w-full h-full object-cover" alt="Where we park" />
                         </div>
                         <div>
                             <span class="text-[9px] font-bold uppercase tracking-wider text-white/50 block mb-0.5">Location</span>
@@ -640,42 +645,44 @@
     </div>
 
 
+    <!-- CORE ANIMATION CONTROLLER FRAMEWORK -->
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             gsap.registerPlugin(ScrollTrigger);
 
-            // Setup GSAP MatchMedia (Responsive Animations)
+            // Standardized Unified Lenis Architecture (Fixed the Dual-Instance Crash Bug)
+            const lenis = new Lenis({
+                duration: 1.1,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smoothWheel: true,
+                touchMultiplier: 1.3
+            });
+
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add((time) => { lenis.raf(time * 1000) });
+            gsap.ticker.lagSmoothing(0);
+
+            // Cross-Viewport Link Scroller Engine
+            document.querySelectorAll('#navbar a, #mobile-navbar a, #hero a, #m-hero a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const targetId = link.getAttribute('href');
+                    if (targetId && targetId.startsWith('#')) {
+                        e.preventDefault();
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            lenis.scrollTo(targetElement, {
+                                offset: window.innerWidth < 768 ? -60 : -75,
+                                duration: 1.1
+                            });
+                        }
+                    }
+                });
+            });
+
             let mm = gsap.matchMedia();
 
-            // 1. DESKTOP & IPAD ACTIVE SCHEMES (min-width: 768px)
+            // 1. DESKTOP WORKSPACE SCHEMES (min-width: 768px)
             mm.add("(min-width: 768px)", () => {
-                const lenis = new Lenis({
-                    duration: 1.2,
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                    smoothWheel: true
-                });
-
-                lenis.on('scroll', ScrollTrigger.update);
-                gsap.ticker.add((time) => { lenis.raf(time * 1000) });
-                gsap.ticker.lagSmoothing(0);
-
-                document.querySelectorAll('#navbar a').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        const targetId = link.getAttribute('href');
-                        if (targetId && targetId.startsWith('#')) {
-                            e.preventDefault();
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                lenis.scrollTo(targetElement, {
-                                    offset: -75,
-                                    duration: 1.2
-                                });
-                            }
-                        }
-                    });
-                });
-
-                // Desktop GSAP Triggers
                 gsap.from("#food-text", { opacity: 0, y: 80, duration: 1.2, delay: 0.3, ease: "power4.out" });
                 gsap.from("#truck-text", { opacity: 0, y: 80, duration: 1.2, delay: 0.6, ease: "power4.out" });
                 gsap.from("#hero-content p:first-child", { opacity: 0, y: 30, duration: 0.8, delay: 0.1, ease: "power3.out" });
@@ -695,171 +702,105 @@
                 });
 
                 gsap.fromTo("#hero-bg", { scale: 1.15 }, {
-                    yPercent: 30,
-                    scale: 1,
-                    ease: "none",
+                    yPercent: 30, scale: 1, ease: "none",
                     scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true }
                 });
                 gsap.to("#hero-content", {
-                    yPercent: 20, opacity: 0,
-                    ease: "none",
+                    yPercent: 20, opacity: 0, ease: "none",
                     scrollTrigger: { trigger: "#hero", start: "top top", end: "bottom top", scrub: true }
                 });
 
-                const galleryImages = document.querySelectorAll('.g-img');
-                galleryImages.forEach(img => {
+                document.querySelectorAll('.g-img').forEach(img => {
                     gsap.to(img, {
-                        scale: 1,
-                        yPercent: 10,
-                        ease: "none",
+                        scale: 1, yPercent: 10, ease: "none",
                         scrollTrigger: { trigger: img.parentElement, start: "top bottom", end: "bottom top", scrub: true }
                     });
                 });
 
-                const tContainer = document.querySelector('#timeline-container');
-                const progressLine = document.querySelector('#t-progress');
-                
-                gsap.to(progressLine, {
-                    height: "100%",
-                    ease: "none",
+                gsap.to('#t-progress', {
+                    height: "100%", ease: "none",
                     scrollTrigger: {
-                        trigger: tContainer,
-                        start: "top center",
-                        end: "bottom center",
-                        scrub: 0.5
+                        trigger: '#timeline-container',
+                        start: "top center", end: "bottom center", scrub: 0.5
                     }
                 });
 
-                const rows = document.querySelectorAll('.t-row');
-                rows.forEach((row, i) => {
+                document.querySelectorAll('.t-row').forEach((row) => {
                     const tl = gsap.timeline({
-                        scrollTrigger: {
-                            trigger: row,
-                            start: "top 60%",
-                            toggleActions: "play none none reverse"
-                        }
+                        scrollTrigger: { trigger: row, start: "top 60%", toggleActions: "play none none reverse" }
                     });
-
                     tl.to(row.querySelector('.t-badge'), { scale: 1, duration: 0.5, ease: "back.out(1.5)" })
-                     .to(row.querySelector('.t-text'), { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.2")
-                     .fromTo(row.querySelector('.t-img'), { scale: 1.2 }, { scale: 1, duration: 1.5, ease: "power2.out" }, "-=0.8");
+                      .to(row.querySelector('.t-text'), { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, "-=0.2")
+                      .fromTo(row.querySelector('.t-img'), { scale: 1.2 }, { scale: 1, duration: 1.5, ease: "power2.out" }, "-=0.8");
                 });
 
-                const packageSection = document.querySelector('#package-section');
-                const hugeTitle = document.querySelector('#huge-title');
-                
                 gsap.set('.card-1', { rotation: 0, zIndex: 3 });
                 gsap.set('.card-2', { rotation: 0, zIndex: 2 });
                 gsap.set('.card-3', { rotation: 0, zIndex: 1 });
 
                 const packageTl = gsap.timeline({
                     scrollTrigger: {
-                        trigger: packageSection,
-                        start: "top top",
-                        end: "+=250%",
-                        pin: true,
-                        scrub: 1,
-                        anticipatePin: 1
+                        trigger: '#package-section',
+                        start: "top top", end: "+=250%", pin: true, scrub: 1, anticipatePin: 1
                     }
                 });
+                packageTl.to('#huge-title', { scale: 1.3, opacity: 0.15, duration: 1 }, 0)
+                         .to('.card-1', { xPercent: -105, yPercent: 8, rotation: -10, duration: 1, ease: "power2.inOut" }, 0.2)
+                         .to('.card-3', { xPercent: 105, yPercent: 8, rotation: 10, duration: 1, ease: "power2.inOut" }, 0.2)
+                         .to('.card-2', { yPercent: -5, duration: 1, ease: "power2.inOut" }, 0.2)
+                         .to({}, { duration: 0.5 }); 
 
-                packageTl
-                   .to(hugeTitle, { scale: 1.3, opacity: 0.15, duration: 1 }, 0)
-                   .to('.card-1', { xPercent: -105, yPercent: 8, rotation: -10, duration: 1, ease: "power2.inOut" }, 0.2)
-                   .to('.card-3', { xPercent: 105, yPercent: 8, rotation: 10, duration: 1, ease: "power2.inOut" }, 0.2)
-                   .to('.card-2', { yPercent: -5, duration: 1, ease: "power2.inOut" }, 0.2)
-                   .to({}, { duration: 0.5 }); 
-
-                const hSection = document.querySelector('#testimonials-section');
                 const hTrack = document.querySelector('#h-track');
-
                 gsap.to(hTrack, {
                     x: () => -(hTrack.scrollWidth - window.innerWidth),
                     ease: "none",
                     scrollTrigger: {
-                        trigger: hSection,
-                        start: "top top",
-                        end: () => "+=" + hTrack.scrollWidth,
-                        pin: true,
-                        scrub: 1,
-                        invalidateOnRefresh: true
+                        trigger: '#testimonials-section',
+                        start: "top top", end: () => "+=" + hTrack.scrollWidth,
+                        pin: true, scrub: 1, invalidateOnRefresh: true
                     }
                 });
             });
 
-            // 2. MOBILE PHONE ACTIVE SCHEMES (max-width: 767px)
+            // 2. MOBILE VIEWPORT SCHEMES (max-width: 767px)
             mm.add("(max-width: 767px)", () => {
-                const lenisMobile = new Lenis({
-                    duration: 1.0,
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                    smoothWheel: true,
-                    syncTouch: true
-                });
+                // Fixed empty target selector bug on Mobile Hero text strings
+                gsap.from("#m-hero span", { opacity: 0, y: 35, duration: 1, stagger: 0.2, ease: "power3.out" });
 
-                lenisMobile.on('scroll', ScrollTrigger.update);
-                gsap.ticker.add((time) => { lenisMobile.raf(time * 1000) });
-                gsap.ticker.lagSmoothing(0);
-
-                // Anchors scrolling for Mobile
-                document.querySelectorAll('#mobile-navbar a').forEach(link => {
-                    link.addEventListener('click', (e) => {
-                        const targetId = link.getAttribute('href');
-                        if (targetId && targetId.startsWith('#')) {
-                            e.preventDefault();
-                            const targetElement = document.querySelector(targetId);
-                            if (targetElement) {
-                                lenisMobile.scrollTo(targetElement, {
-                                    offset: -60,
-                                    duration: 1.0
-                                });
-                            }
-                        }
-                    });
-                });
-
-                // Mobile Hero Entry animations
-                gsap.from("#m-hero h1, #m-hero span", { opacity: 0, y: 40, duration: 1, stagger: 0.2, ease: "power3.out" });
-
-                // Mobile Timeline Tracker Line progress
-                const mtContainer = document.querySelector('#m-timeline-container');
-                const mProgressLine = document.querySelector('#m-t-progress');
-                
-                gsap.to(mProgressLine, {
-                    height: "100%",
-                    ease: "none",
+                // Responsive timeline layout filler tracker engine
+                gsap.to('#m-t-progress', {
+                    height: "100%", ease: "none",
                     scrollTrigger: {
-                        trigger: mtContainer,
-                        start: "top 70%",
-                        end: "bottom 70%",
-                        scrub: 0.5
+                        trigger: '#m-timeline-container',
+                        start: "top center", end: "bottom center", scrub: 0.5
                     }
                 });
 
-                // Mobile Card Pinning (Vertical stack fanning instead of horizontal off-screen break)
-                const mPackageSection = document.querySelector('#m-package-section');
-                const mHugeTitle = document.querySelector('#m-huge-title');
+                // Added individual fade tracking steps to mobile logs
+                document.querySelectorAll('.m-t-row').forEach((row) => {
+                    gsap.to(row.querySelector('.m-t-content'), {
+                        opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
+                        scrollTrigger: { trigger: row, start: "top 75%", toggleActions: "play none none reverse" }
+                    });
+                });
 
+                // Fixed viewport container breaks on inner structural elements
                 gsap.set('.m-card-1', { rotation: 0, zIndex: 3 });
                 gsap.set('.m-card-2', { rotation: 0, zIndex: 2 });
                 gsap.set('.m-card-3', { rotation: 0, zIndex: 1 });
 
                 const mPackageTl = gsap.timeline({
                     scrollTrigger: {
-                        trigger: mPackageSection,
-                        start: "top top",
-                        end: "+=180%",
-                        pin: true,
-                        scrub: 1,
-                        anticipatePin: 1
+                        trigger: '#m-whenwhere',
+                        start: "top top", end: "+=180%", pin: true, scrub: 1, anticipatePin: 1
                     }
                 });
 
-                mPackageTl
-                   .to(mHugeTitle, { scale: 1.15, opacity: 0.12, duration: 1 }, 0)
-                   .to('.m-card-1', { yPercent: -80, xPercent: -6, rotation: -6, duration: 1, ease: "power2.inOut" }, 0.2)
-                   .to('.m-card-3', { yPercent: 80, xPercent: 6, rotation: 6, duration: 1, ease: "power2.inOut" }, 0.2)
-                   .to('.m-card-2', { scale: 0.94, duration: 1, ease: "power2.inOut" }, 0.2)
-                   .to({}, { duration: 0.4 });
+                mPackageTl.to('#m-huge-title', { scale: 1.15, opacity: 0.12, duration: 1 }, 0)
+                          .to('.m-card-1', { yPercent: -80, xPercent: -6, rotation: -6, duration: 1, ease: "power2.inOut" }, 0.2)
+                          .to('.m-card-3', { yPercent: 80, xPercent: 6, rotation: 6, duration: 1, ease: "power2.inOut" }, 0.2)
+                          .to('.m-card-2', { scale: 0.94, duration: 1, ease: "power2.inOut" }, 0.2)
+                          .to({}, { duration: 0.4 });
             });
         });
     </script>
