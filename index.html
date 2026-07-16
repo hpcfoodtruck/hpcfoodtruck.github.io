@@ -144,7 +144,7 @@
         /* --- MOBILE STYLES --- */
         #mobile-view .mobile-timeline-line-container {
             position: absolute;
-            left: 24px; /* Matches container padding barrier */
+            left: 24px; 
             top: 0;
             bottom: 0;
             width: 3px;
@@ -650,7 +650,6 @@
         document.addEventListener("DOMContentLoaded", () => {
             gsap.registerPlugin(ScrollTrigger);
 
-            // Standardized Unified Lenis Architecture (Fixed the Dual-Instance Crash Bug)
             const lenis = new Lenis({
                 duration: 1.1,
                 easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -662,7 +661,6 @@
             gsap.ticker.add((time) => { lenis.raf(time * 1000) });
             gsap.ticker.lagSmoothing(0);
 
-            // Cross-Viewport Link Scroller Engine
             document.querySelectorAll('#navbar a, #mobile-navbar a, #hero a, #m-hero a').forEach(link => {
                 link.addEventListener('click', (e) => {
                     const targetId = link.getAttribute('href');
@@ -764,10 +762,8 @@
 
             // 2. MOBILE VIEWPORT SCHEMES (max-width: 767px)
             mm.add("(max-width: 767px)", () => {
-                // Fixed empty target selector bug on Mobile Hero text strings
                 gsap.from("#m-hero span", { opacity: 0, y: 35, duration: 1, stagger: 0.2, ease: "power3.out" });
 
-                // Responsive timeline layout filler tracker engine
                 gsap.to('#m-t-progress', {
                     height: "100%", ease: "none",
                     scrollTrigger: {
@@ -776,7 +772,6 @@
                     }
                 });
 
-                // Added individual fade tracking steps to mobile logs
                 document.querySelectorAll('.m-t-row').forEach((row) => {
                     gsap.to(row.querySelector('.m-t-content'), {
                         opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
@@ -784,22 +779,35 @@
                     });
                 });
 
-                // Fixed viewport container breaks on inner structural elements
-                gsap.set('.m-card-1', { rotation: 0, zIndex: 3 });
-                gsap.set('.m-card-2', { rotation: 0, zIndex: 2 });
-                gsap.set('.m-card-3', { rotation: 0, zIndex: 1 });
+                // --- MOBILE CARDS STACK BUG FIX ENGINE ---
+                // We layer them nicely upfront to give a tactile "stacked deck" look
+                gsap.set('.m-card-1', { yPercent: 0, scale: 1, rotation: 0, zIndex: 3 });
+                gsap.set('.m-card-2', { yPercent: 5, scale: 0.95, rotation: 1, zIndex: 2 });
+                gsap.set('.m-card-3', { yPercent: 10, scale: 0.90, rotation: -1, zIndex: 1 });
 
                 const mPackageTl = gsap.timeline({
                     scrollTrigger: {
                         trigger: '#m-whenwhere',
-                        start: "top top", end: "+=180%", pin: true, scrub: 1, anticipatePin: 1
+                        start: "top top", 
+                        end: "+=250%", 
+                        pin: true, 
+                        scrub: 1, 
+                        anticipatePin: 1
                     }
                 });
 
-                mPackageTl.to('#m-huge-title', { scale: 1.15, opacity: 0.12, duration: 1 }, 0)
-                          .to('.m-card-1', { yPercent: -80, xPercent: -6, rotation: -6, duration: 1, ease: "power2.inOut" }, 0.2)
-                          .to('.m-card-3', { yPercent: 80, xPercent: 6, rotation: 6, duration: 1, ease: "power2.inOut" }, 0.2)
-                          .to('.m-card-2', { scale: 0.94, duration: 1, ease: "power2.inOut" }, 0.2)
+                mPackageTl.to('#m-huge-title', { scale: 1.1, opacity: 0.12, duration: 0.6 }, 0)
+                          // Step 1: Cleanly slide Card 1 up-left and fade out completely
+                          .to('.m-card-1', { yPercent: -130, xPercent: -10, rotation: -8, opacity: 0, duration: 1, ease: "power2.inOut" }, 0.1)
+                          // Bring Card 2 to center frame fully crisp
+                          .to('.m-card-2', { yPercent: 0, scale: 1, rotation: 0, duration: 0.6, ease: "power2.out" }, 0.4)
+                          
+                          // Step 2: Cleanly slide Card 2 up-right and fade out completely
+                          .to('.m-card-2', { yPercent: -130, xPercent: 10, rotation: 8, opacity: 0, duration: 1, ease: "power2.inOut" }, 1.2)
+                          // Bring Card 3 to center frame fully crisp
+                          .to('.m-card-3', { yPercent: 0, scale: 1, rotation: 0, duration: 0.6, ease: "power2.out" }, 1.5)
+                          
+                          // Quick pause buffer before unpinning section
                           .to({}, { duration: 0.4 });
             });
         });
